@@ -69,3 +69,18 @@ Dans le cadre du projet, on ne gère pas l'authentification à l'espace gestionn
 
 * https://github.com/jlafourc/m1-devwebavance/blob/master/ddl-oracle.sql[Script DDL Oracle]
 * https://github.com/jlafourc/m1-devwebavance/blob/master/ddl-h2.sql[Script DDL H2]
+
+=== Rajouter le jar ojdbc au classpath avec Gradle
+
+Pour ceux qui choississent Oracle comme moteur de base de données, il faut rajouter une dépendance Gradle vers le jar du driver ojdbc. Oracle n'autorise pas la publication de ce driver ojdbc dans les dépot publics de dépendances. Vous devez donc le télécharger (Fait en TP). 
+Il faudra (exceptionnellement) stocker ce jar avec le code source de votre projet (et le commiter dans Git). Pour cela, créez un répertoire `libs` dans votre projet SpringBoot (au même niveau que le build.gradle). Vous y copierez le fichier ojdbc8.jar. Reste à configurer gradle pour qu'il rajoute ce jar dans le classpath. Il faut rajouter une dépendance un peu particulière à la liste des dépendances dans le build.gradle comme suit : 
+
+[source, groovy]
+----
+dependencies {
+    /** liste des autres dépendances **/    
+	runtime fileTree(dir: 'libs', include: '*.jar')
+}
+----
+
+Ne pas oublier ensuite de rafraichir le projet Gradle dans l'IDE pour que le classpath se mette à jour.
